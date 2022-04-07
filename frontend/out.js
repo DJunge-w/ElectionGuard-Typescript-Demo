@@ -40227,7 +40227,7 @@
     const seed_nonce = new ElementModQ2(BigInt("40358"));
     const encryption_seed = new ElementModQ2(BigInt("88136692332113344175662474900446441286169260372780056734314948839391938984061"));
     const encrypted_ballot = get_optional(encrypt_ballot(ballot, internalManifest, context, encryption_seed, seed_nonce));
-    return new EncryptBallotOutput(seed_nonce.elem.toString(), encrypted_ballot.crypto_hash.to_hex().toString());
+    return new EncryptBallotOutput(seed_nonce.to_hex().toString(), encrypted_ballot.crypto_hash.to_hex().toString());
   }
   function getQRCode(strs) {
     const qr = new import_qrcode_generator_ts.QRCode();
@@ -41103,7 +41103,7 @@
       title: [
         {
           languageID: "en",
-          text: "COMP413 Best Team"
+          text: "Do you like ElectionGuard-Typescript?"
         }
       ],
       subTitle: [
@@ -41159,7 +41159,7 @@
           title: [
             {
               languageID: "en",
-              text: "ElectionGuard-TypeScript"
+              text: "Yes"
             }
           ],
           subTitle: [
@@ -41198,7 +41198,7 @@
           title: [
             {
               languageID: "en",
-              text: "ElectionGuard-TypeScript"
+              text: "You cannot say no"
             }
           ],
           subTitle: [
@@ -41237,7 +41237,7 @@
           title: [
             {
               languageID: "en",
-              text: "ElectionGuard-TypeScript"
+              text: "Yes and yes"
             }
           ],
           subTitle: [
@@ -41679,17 +41679,17 @@
         {
           object_id: "95825d9d-7a52-4632-a401-40ea3a3d910a",
           sequence_order: 0,
-          candidate_id: "ElectionGuard-TypeScript1"
+          candidate_id: "Yes"
         },
         {
           object_id: "d21fdac7-fd1f-440f-9a2c-184292811e30",
           sequence_order: 1,
-          candidate_id: "ElectionGuard-TypeScript2"
+          candidate_id: "You cannot say no"
         },
         {
           object_id: "743599b8-304c-4179-955d-1519d82ad229",
           sequence_order: 2,
-          candidate_id: "ElectionGuard-TypeScript3"
+          candidate_id: "Yes and yes"
         },
         {
           object_id: "26661225-9d20-40c1-947f-ea4532df7eb5",
@@ -41703,7 +41703,7 @@
       vote_variation: "unknown",
       number_elected: 1,
       votes_allowed: 1,
-      name: "COMP413 Best Team"
+      name: "Do you like ElectionGuard-Typescript?"
     }
   ];
   var ballot_styles = [
@@ -41756,9 +41756,9 @@
     a.click();
   }
   function submitCiphertextBallot(voterId, encryptedBallot) {
-    fetch("https://f069-168-5-58-228.ngrok.io/receive/" + voterId, {
+    fetch("https://2901-168-5-139-245.ngrok.io/receive/" + voterId, {
       method: "POST",
-      mode: "no-cors",
+      mode: "cors",
       headers: {"Content-Type": "application/json"},
       body: serialize_compatible_CiphertextBallot(get_optional(encryptedBallot))
     }).then((res) => {
@@ -41774,20 +41774,40 @@
   get_optional(document.getElementById("prev3")).addEventListener("click", function() {
     get_optional(document.getElementById("step_2")).className = "step current";
     get_optional(document.getElementById("step_3")).className = "step";
-    if (document.querySelector('input[name="choice"]')) {
-      document.querySelectorAll('input[name="choice"]').forEach((elem) => {
-        elem.removeAttribute("disabled");
-      });
-    }
-    if (document.querySelector('input[name="secondary"]')) {
-      document.querySelectorAll('input[name="secondary"]').forEach((elem) => {
-        elem.removeAttribute("disabled");
-      });
-    }
+    document.querySelectorAll('input[name="choice"]').forEach((elem) => {
+      elem.removeAttribute("disabled");
+    });
+    document.querySelectorAll('input[name="secondary"]').forEach((elem) => {
+      elem.removeAttribute("disabled");
+    });
+    document.querySelectorAll('input[name="tertiary"]').forEach((elem) => {
+      elem.removeAttribute("disabled");
+    });
+    document.querySelectorAll('input[name="quaternary"]').forEach((elem) => {
+      elem.removeAttribute("disabled");
+    });
+    document.querySelectorAll('input[name="writein"]').forEach((elem) => {
+      elem.removeAttribute("disabled");
+    });
     get_optional(document.getElementById("review-btn")).style.display = "block";
     get_optional(document.getElementById("submit-btn")).style.display = "none";
     get_optional(document.getElementById("previous2")).style.display = "block";
     get_optional(document.getElementById("previous3")).style.display = "none";
+  });
+  document.querySelectorAll('input[name="choice"]').forEach((elem) => {
+    elem.removeAttribute("disabled");
+  });
+  document.querySelectorAll('input[name="secondary"]').forEach((elem) => {
+    elem.removeAttribute("disabled");
+  });
+  document.querySelectorAll('input[name="tertiary"]').forEach((elem) => {
+    elem.removeAttribute("disabled");
+  });
+  document.querySelectorAll('input[name="quaternary"]').forEach((elem) => {
+    elem.removeAttribute("disabled");
+  });
+  document.querySelectorAll('input[name="writein"]').forEach((elem) => {
+    elem.removeAttribute("disabled");
   });
   get_optional(document.getElementById("next1")).addEventListener("click", function() {
     get_optional(document.getElementById("step_1")).className = "step done";
@@ -41827,6 +41847,21 @@
         ballotItems[3].ballotOptions[i].selected = question4[i].checked;
       }
     }
+    document.querySelectorAll('input[name="choice"]').forEach((elem) => {
+      elem.disabled = true;
+    });
+    document.querySelectorAll('input[name="secondary"]').forEach((elem) => {
+      elem.disabled = true;
+    });
+    document.querySelectorAll('input[name="tertiary"]').forEach((elem) => {
+      elem.disabled = true;
+    });
+    document.querySelectorAll('input[name="quaternary"]').forEach((elem) => {
+      elem.disabled = true;
+    });
+    document.querySelectorAll('input[name="writein"]').forEach((elem) => {
+      elem.disabled = true;
+    });
     get_optional(document.getElementById("step_2")).className = "step done";
     get_optional(document.getElementById("step_3")).className = "step current";
     get_optional(document.getElementById("review-btn")).style.display = "none";

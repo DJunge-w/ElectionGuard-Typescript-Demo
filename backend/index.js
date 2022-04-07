@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const fs = require('fs');
 const url = require('url');
 const path = require('path');
@@ -13,7 +14,7 @@ let options = {
 };
 
 const app = express();
-
+app.use(cors());
 // TODO: Write API
 
 //host voter main interface
@@ -32,7 +33,7 @@ app.post('/receive/:voterId', function(req, res) {
   let body = '';
   let voterId = req.params.voterId;
   console.log("receive: "+voterId);
-  let filePath = path.join(__dirname, '../../../encrypted_data/000/receivedCipherTextBallot_'+voterId+'.txt');
+  let filePath = path.join(__dirname, '../encrypted_data/000/receivedCipherTextBallot_'+voterId+'.txt');
   console.log(filePath);
   req.on('data', function(data) {
     body += data;
